@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 5000;
 const firebase = require('firebase');
 
 app.set('view engine', 'ejs');
-app.use(express.static("public"));
+app.use(express.static(__dirname+"/public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 firebase.initializeApp({
