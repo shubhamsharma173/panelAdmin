@@ -292,17 +292,18 @@ function updateCount(cntr) {
             }
         }
 
-        setInterval(function () {
-            firebase.database().ref('/counter').once('value').then(function(snapshot) {
-                let sn=snapshot.toJSON();
-                // console.log(sn);
-                allReg=sn.allRegis;
-                console.log(allReg);
-              }).then(()=>{
-                MeraEventData();
-              });
+        // setInterval(function () {
+        //     firebase.database().ref('/counter').once('value').then(function(snapshot) {
+        //         let sn=snapshot.toJSON();
+        //         // console.log(sn);
+        //         allReg=sn.allRegis;
+        //         console.log(allReg);
+        //       }).then(()=>{
+        //         MeraEventData();
+        //       });
             
-        }, 10000)
+        // }, 10000)
+        
 app.get("/", function (req, res) {
     res.render("lock-screen");
 })
