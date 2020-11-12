@@ -7,159 +7,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Admin Panel</title>
     <meta name="description" content="Admin Panel for api" />
-<!-- Data Table CSS -->
-<link href="vendors/datatables.net-dt/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
-<link href="vendors/datatables.net-responsive-dt/css/responsive.dataTables.min.css" rel="stylesheet" type="text/css" />
 
-<!-- Toggles CSS -->
-<link href="vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
-<link href="vendors/jquery-toggles/css/themes/toggles-light.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+        
 
-<!-- Custom CSS -->
-<link rel="stylesheet" type="text/css" href="dist/css/style.css">
-<style>
-    body{
-        width: 200%;
-        overflow: auto;
-    }
-</style>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+        
+
+
 </head>
 
 <body>
-    
-   
-	<!-- HK Wrapper -->
-	<div class="hk-wrapper">
+    <div class="container-fluid" style="padding: 2rem;">
+        <div class="row">
+            API calls count: <%= cnt %>
+        </div>
+        <div class="row">
+            Engagez Registered count: <%= rejo %>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div>
+                    <table id="example" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>fname</th>
+                                <th>lname</th>
+                                <th>company</th>
+                                <th>designation</th>
+                                <th>phone</th>
+                                <th>email</th>
+                                <th>ticket</th>
+                                <th>access_groups</th>
+                                <th>Status Engagez</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% data.forEach((li)=>{ %>
+                            <tr>
+                                <td><%= li.id %></td>
+                                <td><%= li.fname %></td>
+                                <td><%= li.lname %></td>
+                                <td><%= li.company %></td>
+                                <td><%= li.designation %></td>
+                                <td><%= li.phone %></td>
+                                <td><%= li.email %></td>
+                                <td><%= li.ticket %></td>
+                                <td><%= li.access_groups %></td>
+                                <td><%= li.status %></td>
+                            </tr>
+                            <% }) %>
 
-        <!-- Main Content -->
-        <div class="hk-pg-wrapper hk-auth-wrapper">
-            <!-- <header class="d-flex justify-content-between align-items-center">
-                <a class="d-flex auth-brand" href="#">
-                    Marvin
-                </a>
-                <div class="btn-group btn-group-sm">
-                    <a href="#" class="btn btn-outline-secondary">Help</a>
-                    <a href="#" class="btn btn-outline-secondary">About Us</a>
-                </div>
-            </header> -->
-            <div class="container-fluid" style="padding: 2rem;">
-                <div class="row">
-                    API calls count: <%= cnt %> 
-                </div>
-                <div class="row">
-                    Engagez Registered count: <%= rejo %> 
-                </div>
-                <div class="row">
-                    <div class="col-sm">
-                        <div class="table-wrap">
-                            <table id="datable_1" class="table table-hover w-100 display pb-30">
-                                <thead>
-                                    <tr>
-                                        <th>id</th>
-                                        <th>fname</th>
-                                        <th>lname</th>
-                                        <th>company</th>
-                                        <th>designation</th>
-                                        <th>phone</th>
-                                        <th>email</th>
-                                        <th>ticket</th>
-                                        <th>access_groups</th>
-                                        <th>Status Engagez</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                        <% data.forEach((li)=>{ %>
-                                            <tr>
-                                                <td><%= li.id %></td>
-                                                <td><%= li.fname %></td>
-                                                <td><%= li.lname %></td>
-                                                <td><%= li.company %></td>
-                                                <td><%= li.designation %></td>
-                                                <td><%= li.phone %></td>
-                                                <td><%= li.email %></td>
-                                                <td><%= li.ticket %></td>
-                                                <td><%= li.access_groups %></td>
-                                                <td><%= li.status %></td>
-                                            </tr>
-                                        <% }) %>
-                                    
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>id</th>
-                                        <th>fname</th>
-                                        <th>lname</th>
-                                        <th>company</th>
-                                        <th>designation</th>
-                                        <th>phone</th>
-                                        <th>email</th>
-                                        <th>ticket</th>
-                                        <th>access_groups</th>
-                                        <th>Status Engagez</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>id</th>
+                                <th>fname</th>
+                                <th>lname</th>
+                                <th>company</th>
+                                <th>designation</th>
+                                <th>phone</th>
+                                <th>email</th>
+                                <th>ticket</th>
+                                <th>access_groups</th>
+                                <th>Status Engagez</th>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
         </div>
-        <!-- /Main Content -->
-
     </div>
-   <!-- /HK Wrapper -->
-
-    <!-- jQuery -->
-<script src="vendors/jquery/dist/jquery.min.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="vendors/popper.js/dist/umd/popper.min.js"></script>
-<script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-
-<!-- Slimscroll JavaScript -->
-<script src="dist/js/jquery.slimscroll.js"></script>
-
-<!-- Data Table JavaScript -->
-<script src="vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="vendors/datatables.net-dt/js/dataTables.dataTables.min.js"></script>
-<script src="vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-<script src="vendors/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
-<script src="vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-<script src="vendors/jszip/dist/jszip.min.js"></script>
-<script src="vendors/pdfmake/build/pdfmake.min.js"></script>
-<script src="vendors/pdfmake/build/vfs_fonts.js"></script>
-<script src="vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-<script src="vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-<script src="vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="dist/js/dataTables-data.js"></script>
-
-<!-- FeatherIcons JavaScript -->
-<script src="dist/js/feather.min.js"></script>
-
-<!-- Fancy Dropdown JS -->
-<script src="dist/js/dropdown-bootstrap-extended.js"></script>
-
-<!-- FeatherIcons JavaScript -->
-<script src="dist/js/feather.min.js"></script>
-
-<!-- twitter JavaScript -->
-<script src="dist/js/twitterFetcher.js"></script>
-<script src="dist/js/widgets-data.js"></script>
-
-<!-- Owl JavaScript -->
-<script src="vendors/owl.carousel/dist/owl.carousel.min.js"></script>
-
-<!-- Owl Init JavaScript -->
-<script src="dist/js/owl-data.js"></script>
-
-<!-- Toggles JavaScript -->
-<script src="vendors/jquery-toggles/toggles.min.js"></script>
-<script src="dist/js/toggle-data.js"></script>
-
-<!-- Init JavaScript -->
-<script src="dist/js/init.js"></script>
-
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
 </body>
 
 </html>

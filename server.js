@@ -308,7 +308,7 @@ app.get("/", function (req, res) {
 })
 app.post("/login", function (req, res) {
     let password = req.body.pass,
-        email = "technologist@sees-on.com";
+        email = req.body.email;
     firebase.auth().signInWithEmailAndPassword(email, password)
     .then(()=>{
         res.redirect("/admin");
