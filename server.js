@@ -304,6 +304,7 @@ setInterval(function () {
 
 }, 10000)
 
+
 app.get("/", function (req, res) {
     res.render("lock-screen");
 })
