@@ -32,13 +32,13 @@ async function MeraEventData() {
     counter += 1;
     let options = {
         'method': 'POST',
-        'url': 'https://www.meraevents.com/us/resource/getEventAttendees?access_token=e794dfc2eb7d70da55fc12f281f819835137914b&eventId=236447',
+        'url': 'https://www.meraevents.com/us/resource/getEventAttendees?access_token=bb3f614397aa12c1bc4a4a7965939b91ce9811c8&eventId=234541',
         'headers': {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Cookie': 'countryId=264; ipCountry=India; ipCity=Coimbatore; ipRegion=Tamil+Nadu; userip=106.207.206.80; ipCountry=India; ipCity=Coimbatore; ipRegion=Tamil+Nadu; userip=106.207.206.80; countryId=264; PHPSESSID=dv5v60j1dm005epf4qsju86644; ci_session=a%3A5%3A%7Bs%3A10%3A%22session_id%22%3Bs%3A32%3A%22000369eee67e99a562e9259bf72cb286%22%3Bs%3A10%3A%22ip_address%22%3Bs%3A12%3A%22172.31.32.48%22%3Bs%3A10%3A%22user_agent%22%3Bs%3A21%3A%22PostmanRuntime%2F7.26.5%22%3Bs%3A13%3A%22last_activity%22%3Bi%3A1603101169%3Bs%3A9%3A%22user_data%22%3Bs%3A0%3A%22%22%3B%7D3737fd1b17185a3b0ed3b2b0243821b719ee3148'
         },
         form: {
-            'eventId': '236447'
+            'eventId': '234541'
         }
     };
     request(options, function (error, response) {
@@ -49,7 +49,7 @@ async function MeraEventData() {
             // console.log(data);
             regData = [];
             for (let i = 0; i < data.length - allReg; i++) {
-                const substring1 = "With";
+                const substring1 = "with";
                 const substring2 = "Masterclass";
                 const substring3 = "Non-Member";
                 let access_groups = []
@@ -76,7 +76,7 @@ async function MeraEventData() {
                     const hasMc = type[1].indexOf(substring2)
                     // console.log("hasMc: ",hasMc);
                     if (hasWith !== -1) {
-                        let splittedWith = type[1].split('With');
+                        let splittedWith = type[1].split('with');
                         let dNum = splittedWith[0].match(/\d+/g); //days data
                         let mNum = splittedWith[1].match(/\d+/g); //MC data
                         // console.log("dNum: ",dNum);
@@ -215,7 +215,7 @@ async function registerApi(att) {
         let request = require('request');
         let options = {
             'method': 'POST',
-            'url': 'https://www.engagez.net/remote/regform/305214?source=YRltI2URo&first_name=' + att.fname + '&last_name=' + att.lname + '&company=' + att.company + '&designation=' + att.designation + '&phone=' + att.phone + '&industry=' + att.industry + '&employee_size=' + att.employee_size + '&years_of_experience=' + att.years_of_experience + '&address=' + att.address + '&city=' + att.city + '&state=' + att.state + '&country=' + att.country + '&email=' + att.email + '&role=0&access_groups=' + att.access_groups,
+            'url': 'https://www.engagez.net/remote/regform/477657?source=ypFQoYTkW&first_name=' + att.fname + '&last_name=' + att.lname + '&company=' + att.company + '&designation=' + att.designation + '&phone=' + att.phone + '&industry=' + att.industry + '&employee_size=' + att.employee_size + '&years_of_experience=' + att.years_of_experience + '&address=' + att.address + '&city=' + att.city + '&state=' + att.state + '&country=' + att.country + '&email=' + att.email + '&role=0&access_groups=' + att.access_groups,
             'headers': {
                 'Cookie': '__cfduid=d130d0b37c46807b7d090b4f4306fa0bb1599372126; SESSddd6530e3c99d048a97beb1370a6a33e=nuunj7c5larbf9gv0mc5vkl4mt'
             }
@@ -292,17 +292,17 @@ async function registerApi(att) {
     }
 }
 
-setInterval(function () {
-    firebase.database().ref('/counter').once('value').then(function (snapshot) {
-        let sn = snapshot.toJSON();
-        // console.log(sn);
-        allReg = sn.allRegis;
-        console.log(allReg);
-    }).then(() => {
-        MeraEventData();
-    });
+// setInterval(function () {
+//     firebase.database().ref('/counter').once('value').then(function (snapshot) {
+//         let sn = snapshot.toJSON();
+//         // console.log(sn);
+//         allReg = sn.allRegis;
+//         console.log(allReg);
+//     }).then(() => {
+//         MeraEventData();
+//     });
 
-}, 10000)
+// }, 10000)
 
 app.get("/", function (req, res) {
     res.render("lock-screen");
