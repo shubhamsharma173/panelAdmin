@@ -20,7 +20,7 @@ firebase.initializeApp({
     measurementId: "G-MDQ53PSCFQ"
 });
 
-let counter = 0, allReg = 0, dispData = [], regData = [];
+let counter = 0, allReg = 84, dispData = [], regData = [];
 function updateCount(cntr) {
     firebase.database().ref('counter').set({
         allRegis: cntr
