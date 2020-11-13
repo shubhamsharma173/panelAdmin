@@ -20,7 +20,7 @@ firebase.initializeApp({
     measurementId: "G-MDQ53PSCFQ"
 });
 
-let counter = 0, allReg = 84, dispData = [], regData = [];
+let counter = 0, allReg = 0, dispData = [], regData = [];
 function updateCount(cntr) {
     firebase.database().ref('counter').set({
         allRegis: cntr
@@ -292,17 +292,17 @@ async function registerApi(att) {
     }
 }
 
-// setInterval(function () {
-//     firebase.database().ref('/counter').once('value').then(function (snapshot) {
-//         let sn = snapshot.toJSON();
-//         // console.log(sn);
-//         allReg = sn.allRegis;
-//         console.log(allReg);
-//     }).then(() => {
-//         MeraEventData();
-//     });
+setInterval(function () {
+    firebase.database().ref('/counter').once('value').then(function (snapshot) {
+        let sn = snapshot.toJSON();
+        // console.log(sn);
+        allReg = sn.allRegis;
+        console.log(allReg);
+    }).then(() => {
+        MeraEventData();
+    });
 
-// }, 10000)
+}, 10000)
 
 app.get("/", function (req, res) {
     res.render("lock-screen");
