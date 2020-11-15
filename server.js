@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const request = require('request');
 const PORT = process.env.PORT || 5000;
 const firebase = require('firebase');
+const _ = require('lodash');
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + "/public"));
@@ -151,6 +152,8 @@ async function MeraEventData() {
                         }
                     }
                 }
+                let lower=_.toLower(data[i].customfields[15].value);
+                let countryy=_.startCase(lower);
                 let fres = '';
                 let lres = '';
                 let fullName = data[i].UserName.trim();
@@ -176,16 +179,16 @@ async function MeraEventData() {
                     id: data[i].attendeeId,
                     fname: fres,
                     lname: lres,
-                    company: data[i].customfields[11].value,
+                    company: data[i].customfields[23].value,
                     designation: data[i].customfields[3].value,
                     phone: data[i].customfields[5].value,
                     industry: data[i].customfields[7].value,
                     employee_size: data[i].customfields[8].value,
                     years_of_experience: data[i].customfields[9].value,
                     address: data[i].customfields[10].value,
-                    city: data[i].customfields[12].value,
-                    state: data[i].customfields[14].value,
-                    country: data[i].customfields[16].value,
+                    city: data[i].customfields[11].value,
+                    state: data[i].customfields[13].value,
+                    country: countryy,
                     email: data[i].Email,
                     ticket: data[i].ticket_name,
                     access_groups: ag,
@@ -292,17 +295,17 @@ async function registerApi(att) {
     }
 }
 
-setInterval(function () {
-    firebase.database().ref('/counter').once('value').then(function (snapshot) {
-        let sn = snapshot.toJSON();
-        // console.log(sn);
-        allReg = sn.allRegis;
-        console.log(allReg);
-    }).then(() => {
-        MeraEventData();
-    });
+// setInterval(function () {
+//     firebase.database().ref('/counter').once('value').then(function (snapshot) {
+//         let sn = snapshot.toJSON();
+//         // console.log(sn);
+//         allReg = sn.allRegis;
+//         console.log(allReg);
+//     }).then(() => {
+//         MeraEventData();
+//     });
 
-}, 10000)
+// }, 10000)
 
 app.get("/", function (req, res) {
     res.render("lock-screen");
