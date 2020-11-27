@@ -33,13 +33,13 @@ async function MeraEventData() {
     counter += 1;
     let options = {
         'method': 'POST',
-        'url': 'https://www.meraevents.com/us/resource/getEventAttendees?access_token=bb3f614397aa12c1bc4a4a7965939b91ce9811c8&eventId=234541',
+        'url': 'https://www.meraevents.com/us/resource/getEventAttendees?access_token=bb3f614397aa12c1bc4a4a7965939b91ce9811c8&eventId=234523',
         'headers': {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Cookie': 'countryId=264; ipCountry=India; ipCity=Coimbatore; ipRegion=Tamil+Nadu; userip=106.207.206.80; ipCountry=India; ipCity=Coimbatore; ipRegion=Tamil+Nadu; userip=106.207.206.80; countryId=264; PHPSESSID=dv5v60j1dm005epf4qsju86644; ci_session=a%3A5%3A%7Bs%3A10%3A%22session_id%22%3Bs%3A32%3A%22000369eee67e99a562e9259bf72cb286%22%3Bs%3A10%3A%22ip_address%22%3Bs%3A12%3A%22172.31.32.48%22%3Bs%3A10%3A%22user_agent%22%3Bs%3A21%3A%22PostmanRuntime%2F7.26.5%22%3Bs%3A13%3A%22last_activity%22%3Bi%3A1603101169%3Bs%3A9%3A%22user_data%22%3Bs%3A0%3A%22%22%3B%7D3737fd1b17185a3b0ed3b2b0243821b719ee3148'
         },
         form: {
-            'eventId': '234541'
+            'eventId': '234523'
         }
     };
     request(options, function (error, response) {
@@ -49,16 +49,18 @@ async function MeraEventData() {
             const data = JSON.parse(response.body);
             // console.log(data);
             regData = [];
-            for (let i = 0; i < data.length - allReg; i++) {
-                const substring1 = "with";
-                const substring2 = "Masterclass";
+            for(let i=0;i<data.length-k;i++) {
+                // const substring1="With"
+                // const substring2="Masterclass"
                 const substring3 = "Non-Member";
-                let access_groups = []
+                let access_groups=[]
                 const ticketStrip = data[i].ticket_name.replace(/\s+/g, '')
                 if (ticketStrip === "CXO") {
                     access_groups.push("CXO");
                 } else if (ticketStrip === "Speaker") {
-                    access_groups.push("speaker");
+                    access_groups.push("Speaker");
+                } else if (ticketStrip === "Awards") {
+                    access_groups.push("Awards");
                 } else {
                     const token = ticketStrip.indexOf(substring3);
                     if (token !== -1) {
@@ -71,98 +73,48 @@ async function MeraEventData() {
                     // console.log("days: ",days);
                     let regExp = /\(([^)]+)\)/;
                     let type = regExp.exec(ticketStrip);
-                    // console.log("type: ",type[1]);
-                    const hasWith = type[1].indexOf(substring1)
-                    // console.log("hasWith: ",hasWith);
-                    const hasMc = type[1].indexOf(substring2)
-                    // console.log("hasMc: ",hasMc);
-                    if (hasWith !== -1) {
-                        let splittedWith = type[1].split('with');
-                        let dNum = splittedWith[0].match(/\d+/g); //days data
-                        let mNum = splittedWith[1].match(/\d+/g); //MC data
-                        // console.log("dNum: ",dNum);
-                        // console.log("mNum: ",mNum);
-                        // if only 1 day
-                        if (dNum.includes("1") || dNum.includes("01")) {
-                            //checking Which day
-                            if (data[i].customfields[22].value === "23rd November") {
-                                access_groups.push("1Day")
-                            }
-                            if (data[i].customfields[22].value === "24th November") {
-                                access_groups.push("2Day")
-                            }
+                    const str=type[1];
+                    // console.log(str);
+                    const dNum= str.match(/\d+/g);
+                    // console.log(dNum);
+                    if(dNum.includes("3")){
+                        access_groups.push("1Day","2Day","3Day","Awards");
+                    }else if(dNum.includes("2")){
+                        let ind=str.indexOf("SHRM")+4;
+                        // console.log(str[ind]);
+                        if(str[ind]=="T"){
+                            access_groups.push("2Day","3Day","Awards");
+                        }else{
+                            access_groups.push("1Day","2Day","Awards");
                         }
-                        // if two days
-                        if (dNum.includes("2") || dNum.includes("02")) {
-                            access_groups.push("1Day", "2Day") // adding both days
+                    }else{
+                        if(data[i].customfields[20].value === "Attend on 09-Dec-2020"){
+                            access_groups.push("1Day");
+                            // console.log("day1");
                         }
-                        // if only 1 mc
-                        if (mNum.includes("1") || mNum.includes("01")) {
-                            // checking which mc
-                            // console.log(data[i].customfields[18].value);
-                            if (data[i].customfields[18].value === "23rd Day 1 Masterclass") {
-                                access_groups.push("1MC")
-                            }
-                            if (data[i].customfields[18].value === "24th Day 2 Masterclass") {
-                                access_groups.push("2MC")
-                            }
+                        else if(data[i].customfields[20].value === "Attend on 10-Dec-2020"){
+                            access_groups.push("2Day");
+                            // console.log("day2");
                         }
-                        // if both mc
-                        if (mNum.includes("2") || mNum.includes("02")) {
-                            access_groups.push("1MC", "2MC") //adding both mc
-                        }
-                    } else {
-                        // either day or mc
-                        if (hasMc !== -1) {
-                            // has only mc
-                            let mNum = type[1].match(/\d+/g);
-                            // console.log("mNum only: ",mNum);
-                            // if only 1 mc
-                            if (mNum.includes("1") || mNum.includes("01")) {
-                                // checking which mc
-                                if (data[i].customfields[18].value === "23rd Day 1 Masterclass") {
-                                    access_groups.push("1MC")
-                                }
-                                if (data[i].customfields[18].value === "24th Day 2 Masterclass") {
-                                    access_groups.push("2MC")
-                                }
-                            }
-                            // if both mc
-                            if (mNum.includes("2") || mNum.includes("02")) {
-                                access_groups.push("1MC", "2MC") //adding both mc
-                            }
-                        } else {
-                            // has only days
-                            let dNum = type[1].match(/\d+/g);
-                            // console.log("dNum only: ",dNum); 
-                            // if only 1 day
-                            if (dNum.includes("1") || dNum.includes("01")) {
-                                //checking Which day
-                                if (data[i].customfields[22].value === "23rd November") {
-                                    access_groups.push("1Day")
-                                }
-                                if (data[i].customfields[22].value === "24th November") {
-                                    access_groups.push("2Day")
-                                }
-                            }
-                            // if two days
-                            if (dNum.includes("2") || dNum.includes("02")) {
-                                access_groups.push("1Day", "2Day") // adding both days
-                            }
+                        else if(data[i].customfields[20].value === "Attend on 11-Dec-2020"){
+                            access_groups.push("3Day");
+                            // console.log("day3");
+                        }else{
+                            console.log("not valid");
                         }
                     }
                 }
                 let lower=_.toLower(data[i].customfields[15].value);
                 let countryy=_.startCase(lower);
-                let fres = '';
-                let lres = '';
+                let fres='';
+                let lres='';
                 let fullName = data[i].UserName.trim();
                 // console.log("fullName: ",fullName);
                 let res = fullName.split(" ");
-                if (res.length === 1) {
-                    fres = res[0];
-                    lres = '';
-                } else {
+                if(res.length===1){
+                    fres=res[0];
+                    lres='';
+                }else{
                     // console.log(res);
                     lres = res[res.length - 1];
                     res.pop();
@@ -171,27 +123,27 @@ async function MeraEventData() {
                     // console.log("fname: ",fres);
                     // console.log("lname: ",lres);
                 }
-
-                let ag = access_groups.join();
-
-                // console.log(data[i]);
-                let attendee = {
+                let ag=access_groups.join();
+                let attendee={
                     id: data[i].attendeeId,
                     fname: fres,
                     lname: lres,
-                    company: data[i].customfields[23].value,
-                    designation: data[i].customfields[3].value,
-                    phone: data[i].customfields[5].value,
-                    industry: data[i].customfields[7].value,
-                    employee_size: data[i].customfields[8].value,
-                    years_of_experience: data[i].customfields[9].value,
-                    address: data[i].customfields[10].value,
-                    city: data[i].customfields[11].value,
-                    state: data[i].customfields[13].value,
-                    country: countryy,
                     email: data[i].Email,
                     ticket: data[i].ticket_name,
                     access_groups: ag,
+                    company: data[i].customfields[2].value,
+                    designation: data[i].customfields[3].value,
+                    phone: data[i].customfields[5].value,
+                    work_phone: data[i].customfields[6].value,
+                    in: data[i].customfields[7].value,
+                    department: data[i].customfields[8].value,
+                    employee_size: data[i].customfields[9].value,
+                    years_of_experience: data[i].customfields[10].value,
+                    address: data[i].customfields[11].value,
+                    state: data[i].customfields[12].value,
+                    city: data[i].customfields[13].value,
+                    pin_code: data[i].customfields[17].value,
+                    country: countryy
                 }
                 regData.push(attendee);
             }
@@ -218,7 +170,7 @@ async function registerApi(att) {
         let request = require('request');
         let options = {
             'method': 'POST',
-            'url': 'https://www.engagez.net/remote/regform/477657?source=ypFQoYTkW&first_name=' + att.fname + '&last_name=' + att.lname + '&company=' + att.company + '&designation=' + att.designation + '&phone=' + att.phone + '&industry=' + att.industry + '&employee_size=' + att.employee_size + '&years_of_experience=' + att.years_of_experience + '&address=' + att.address + '&city=' + att.city + '&state=' + att.state + '&country=' + att.country + '&email=' + att.email + '&role=0&access_groups=' + att.access_groups,
+            'url': 'https://www.engagez.net/remote/regform/364817?source=zI0ZaPMkJ&password=root@1234&first_name=' + att.fname + '&last_name=' + att.lname + '&company=' + att.company + '&designation=' + att.designation + '&department=' + att.department + '&phone=' + att.phone + '&work_phone=' + att.work_phone + '&in=' + att.in + '&employee_size=' + att.employee_size + '&years_of_experience=' + att.years_of_experience + '&address=' + att.address + '&city=' + att.city + '&state=' + att.state + '&country=' + att.country + '&pin_code=' + att.pin_code + '&email=' + att.email + '&role=0&access_groups=' + att.access_groups,
             'headers': {
                 'Cookie': '__cfduid=d130d0b37c46807b7d090b4f4306fa0bb1599372126; SESSddd6530e3c99d048a97beb1370a6a33e=nuunj7c5larbf9gv0mc5vkl4mt'
             }
@@ -231,8 +183,10 @@ async function registerApi(att) {
                     lname: att.lname,
                     company: att.company,
                     designation: att.designation,
+                    department: att.department,
                     phone: att.phone,
-                    industry: att.industry,
+                    work_phone: att.work_phone,
+                    in: att.in,
                     employee_size: att.employee_size,
                     years_of_experience: att.years_of_experience,
                     address: att.address,
@@ -253,8 +207,10 @@ async function registerApi(att) {
                     lname: att.lname,
                     company: att.company,
                     designation: att.designation,
+                    department: att.department,
                     phone: att.phone,
-                    industry: att.industry,
+                    work_phone: att.work_phone,
+                    in: att.in,
                     employee_size: att.employee_size,
                     years_of_experience: att.years_of_experience,
                     address: att.address,
@@ -277,8 +233,10 @@ async function registerApi(att) {
             lname: att.lname,
             company: att.company,
             designation: att.designation,
+            department: att.department,
             phone: att.phone,
-            industry: att.industry,
+            work_phone: att.work_phone,
+            in: att.in,
             employee_size: att.employee_size,
             years_of_experience: att.years_of_experience,
             address: att.address,
@@ -295,17 +253,17 @@ async function registerApi(att) {
     }
 }
 
-setInterval(function () {
-    firebase.database().ref('/counter').once('value').then(function (snapshot) {
-        let sn = snapshot.toJSON();
-        // console.log(sn);
-        allReg = sn.allRegis;
-        console.log(allReg);
-    }).then(() => {
-        MeraEventData();
-    });
+// setInterval(function () {
+//     firebase.database().ref('/counter').once('value').then(function (snapshot) {
+//         let sn = snapshot.toJSON();
+//         // console.log(sn);
+//         allReg = sn.allRegis;
+//         console.log(allReg);
+//     }).then(() => {
+//         MeraEventData();
+//     });
 
-}, 10000)
+// }, 10000)
 
 app.get("/", function (req, res) {
     res.render("lock-screen");
