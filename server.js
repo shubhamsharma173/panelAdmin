@@ -170,7 +170,7 @@ async function registerApi(att) {
         let request = require('request');
         let options = {
             'method': 'POST',
-            'url': 'https://www.engagez.net/remote/regform/364817?source=zI0ZaPMkJ&password=root@1234&first_name=' + att.fname + '&last_name=' + att.lname + '&company=' + att.company + '&designation=' + att.designation + '&department=' + att.department + '&phone=' + att.phone + '&work_phone=' + att.work_phone + '&in=' + att.in + '&employee_size=' + att.employee_size + '&years_of_experience=' + att.years_of_experience + '&address=' + att.address + '&city=' + att.city + '&state=' + att.state + '&country=' + att.country + '&pin_code=' + att.pin_code + '&email=' + att.email + '&role=0&access_groups=' + att.access_groups,
+            'url': 'https://www.engagez.net/remote/regform/364817?source=zI0ZaPMkJ&password=shrmi203164&first_name=' + att.fname + '&last_name=' + att.lname + '&company=' + att.company + '&designation=' + att.designation + '&department=' + att.department + '&phone=' + att.phone + '&work_phone=' + att.work_phone + '&in=' + att.in + '&employee_size=' + att.employee_size + '&years_of_experience=' + att.years_of_experience + '&address=' + att.address + '&city=' + att.city + '&state=' + att.state + '&country=' + att.country + '&pin_code=' + att.pin_code + '&email=' + att.email + '&role=0&access_groups=' + att.access_groups,
             'headers': {
                 'Cookie': '__cfduid=d130d0b37c46807b7d090b4f4306fa0bb1599372126; SESSddd6530e3c99d048a97beb1370a6a33e=nuunj7c5larbf9gv0mc5vkl4mt'
             }
@@ -253,17 +253,17 @@ async function registerApi(att) {
     }
 }
 
-// setInterval(function () {
-//     firebase.database().ref('/counter').once('value').then(function (snapshot) {
-//         let sn = snapshot.toJSON();
-//         // console.log(sn);
-//         allReg = sn.allRegis;
-//         console.log(allReg);
-//     }).then(() => {
-//         MeraEventData();
-//     });
+setInterval(function () {
+    firebase.database().ref('/counter').once('value').then(function (snapshot) {
+        let sn = snapshot.toJSON();
+        // console.log(sn);
+        allReg = sn.allRegis;
+        console.log(allReg);
+    }).then(() => {
+        MeraEventData();
+    });
 
-// }, 10000)
+}, 10000)
 
 app.get("/", function (req, res) {
     res.render("lock-screen");
