@@ -49,7 +49,7 @@ async function MeraEventData() {
             const data = JSON.parse(response.body);
             // console.log(data);
             regData = [];
-            for(let i=0;i<data.length-k;i++) {
+            for(let i=0;i<data.length - allReg;i++) {
                 // const substring1="With"
                 // const substring2="Masterclass"
                 const substring3 = "Non-Member";
@@ -253,17 +253,17 @@ async function registerApi(att) {
     }
 }
 
-// setInterval(function () {
-//     firebase.database().ref('/counter').once('value').then(function (snapshot) {
-//         let sn = snapshot.toJSON();
-//         // console.log(sn);
-//         allReg = sn.allRegis;
-//         console.log(allReg);
-//     }).then(() => {
-//         MeraEventData();
-//     });
+setInterval(function () {
+    firebase.database().ref('/counter').once('value').then(function (snapshot) {
+        let sn = snapshot.toJSON();
+        // console.log(sn);
+        allReg = sn.allRegis;
+        console.log(allReg);
+    }).then(() => {
+        MeraEventData();
+    });
 
-// }, 10000)
+}, 10000)
 
 app.get("/", function (req, res) {
     res.render("lock-screen");
