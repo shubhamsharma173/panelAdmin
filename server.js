@@ -10,7 +10,7 @@ const mongoose = require("mongoose");
 
 
 app.set('view engine', 'ejs');
-app.use(express.static(__dirname + "/public"));
+app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const url = process.env.URL;
