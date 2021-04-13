@@ -7,6 +7,7 @@ const firebase = require('firebase');
 const _ = require('lodash');
 require('dotenv').config()
 const mongoose = require("mongoose");
+const cors = require('cors');
 
 
 app.set('view engine', 'ejs');
