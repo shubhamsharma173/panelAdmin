@@ -63,7 +63,7 @@ async function MeraEventData() {
             console.log(error)
         } else {
             const data = JSON.parse(response.body);
-            // console.log(data);
+            // console.log(data.length);
             regData = [];
             for (let i = 0; i < data.length - allReg; i++) {
               const substring3 = "Non-Member";
@@ -181,7 +181,7 @@ async function MeraEventData() {
                 if (regData.length > 0) {
                     // console.log(regData);
                     regData.forEach((r) => {
-                        // registerApi(r);
+                        registerApi(r);
                     })
                 }
             } catch (error) {
@@ -290,17 +290,17 @@ async function registerApi(att) {
     }
 }
 
-// setInterval(function () {
-//     firebase.database().ref('/counter').once('value').then(function (snapshot) {
-//         let sn = snapshot.toJSON();
-//         // console.log(sn);
-//         allReg = sn.allRegis;
-//         console.log(allReg);
-//     }).then(() => {
-//         MeraEventData();
-//     });
+setInterval(function () {
+    firebase.database().ref('/counter').once('value').then(function (snapshot) {
+        let sn = snapshot.toJSON();
+        // console.log(sn);
+        allReg = sn.allRegis;
+        console.log(allReg);
+    }).then(() => {
+        MeraEventData();
+    });
 
-// }, 10000)
+}, 10000)
 
 app.get("/", function (req, res) {
     res.render("lock-screen");
@@ -340,7 +340,7 @@ app.get("/admin", function (req, res) {
 app.get("/admin-panel",(req,res) => {
     Api.find({},(err,docs)=>{
         res.render("adminPanel",{list: docs});
-    })
+    }).sort({ id: -1 }).limit(100);
 })
 
 app.get("/reg/:attid",(req,res)=>{
