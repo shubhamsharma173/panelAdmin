@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+<!-- 
+Template Name: Marvin - Responsive Bootstrap 4 Admin Dashboard Template
+Author: Hencework
+Contact: https://hencework.ticksy.com/
+
+License: You must have a valid license purchased only from templatemonster to legally use the template for your project.
+-->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Data Table</title>
+    <meta name="description" content="A responsive bootstrap 4 admin dashboard template by hencework" />
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Data Table CSS -->
+    <link href="/vendors/datatables.net-dt/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="/vendors/datatables.net-responsive-dt/css/responsive.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Toggles CSS -->
+    <link href="/vendors/jquery-toggles/css/toggles.css" rel="stylesheet" type="text/css">
+    <link href="/vendors/jquery-toggles/css/themes/toggles-light.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom CSS -->
+    <link href="/dist/css/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+    
+   
+	<!-- HK Wrapper -->
+	<div class="hk-wrapper hk-vertical-nav">
+
+        <!-- Main Content -->
+        <div class="hk-pg-wrapper" style="margin-left: 0;">
+            <!-- Breadcrumb -->
+            <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-light bg-transparent">
+                    <li class="breadcrumb-item"><a href="#">Registrations</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">API</li>
+                </ol>
+            </nav>
+            <!-- /Breadcrumb -->
+
+            <!-- Container -->
+            <div class="container">
+
+                <!-- Title -->
+                <div class="hk-pg-header">
+                    <h4 class="hk-pg-title"><span class="pg-title-icon"><span class="feather-icon"><i data-feather="database"></i></span></span>Data</h4>
+                </div>
+                <!-- /Title -->
+
+                <!-- Row -->
+                <div class="row">
+                    <div class="col-xl-12">
+                        <section class="hk-sec-wrapper hk-invoice-wrap pa-35">
+                                <div class="invoice-details">
+                                    <div class="table-wrap">
+                                        <table id="datable_1" class="table table-hover w-100 display pb-30">
+                                            <thead>
+                                                <tr>
+                                                    <th>Att-id</th>
+                                                    <th>Email</th>
+                                                    <th>ticket</th>
+                                                    <th>Status Engagez</th>
+                                                    <th>access_groups:</th>
+                                                    <th>Time:</th>
+                                                    <th>fname</th>
+                                                    <th>lname</th>
+                                                    <th>company</th>
+                                                    <th>designation</th>
+                                                    <th>phone</th>
+                                                    <th>Work_phone</th>
+                                                    <th>Industry</th>
+                                                    <th>department</th>
+                                                    <th>employee_size</th>
+                                                    <th>years_of_experience</th>
+                                                    <th>address</th>
+                                                    <th>city</th>
+                                                    <th>pin_code</th>
+                                                    <th>country</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% if(list!==null){ %>
+                                                    <% list.forEach((att)=>{ %>
+                                                        <tr>
+                                                <td><%= att.id %></td>
+                                                <td><%= att.email %></td>
+                                                <td><%= att.ticket %></td>
+                                                <td><%= att.status %><% if(att.status!=="SUCCESS"){ %><a href="/reg/<%= att.id %>"> <button class="btn btn-sm btn-disable ml-auto"><i class="material-icons">
+                                                    group_add
+                                                    </i></button></a><% } %></td>
+                                                <td><%= att.access_groups %></td>
+                                                <td><%= att.time %></td>
+                                                <td><%= att.fname %></td>
+                                                <td><%= att.lname %></td>
+                                                <td><%= att.company %></td>
+                                                <td><%= att.designation %></td>
+                                                <td><%= att.phone %></td>
+                                                <td><%= att.work_phone %></td>
+                                                <td><%= att.in %></td>
+                                                <td><%= att.department %></td>
+                                                <td><%= att.employee_size %></td>
+                                                <td><%= att.years_of_experience %></td>
+                                                <td><%= att.address %></td>
+                                                <td><%= att.city %></td>
+                                                <td><%= att.pin_code %></td>
+                                                <td><%= att.country %></td>
+                                            </tr>
+                                                <% }) %>
+                                                <% } %>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Att-id</th>
+                                                    <th>Email</th>
+                                                    <th>ticket</th>
+                                                    <th>Status Engagez</th>
+                                                    <th>access_groups</th>
+                                                    <th>Time</th>
+                                                    <th>fname</th>
+                                                    <th>lname</th>
+                                                    <th>company</th>
+                                                    <th>designation</th>
+                                                    <th>phone</th>
+                                                    <th>Work_phone</th>
+                                                    <th>Industry</th>
+                                                    <th>department</th>
+                                                    <th>employee_size</th>
+                                                    <th>years_of_experience</th>
+                                                    <th>address</th>
+                                                    <th>city</th>
+                                                    <th>pin_code</th>
+                                                    <th>country</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                        </section>
+                    </div>
+                </div>
+                <!-- /Row -->
+
+            </div>
+            <!-- /Container -->
+
+            <!-- Footer -->
+            <!-- <div class="hk-footer-wrap container">
+                <footer class="footer">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <p class="d-inline-block">Follow us</p>
+                            <a href="#" class="d-inline-block btn btn-icon btn-icon-only btn-indigo btn-icon-style-4"><span class="btn-icon-wrap"><i class="fa fa-facebook"></i></span></a>
+                            <a href="#" class="d-inline-block btn btn-icon btn-icon-only btn-indigo btn-icon-style-4"><span class="btn-icon-wrap"><i class="fa fa-twitter"></i></span></a>
+                            <a href="#" class="d-inline-block btn btn-icon btn-icon-only btn-indigo btn-icon-style-4"><span class="btn-icon-wrap"><i class="fa fa-google-plus"></i></span></a>
+                        </div>
+                    </div>
+                </footer>
+            </div> -->
+            <!-- /Footer -->
+
+        </div>
+        <!-- /Main Content -->
+
+    </div>
+    <!-- /HK Wrapper -->
+
+    <!-- jQuery -->
+    <script src="/vendors/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/vendors/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Slimscroll JavaScript -->
+    <script src="/dist/js/jquery.slimscroll.js"></script>
+
+    <!-- Data Table JavaScript -->
+    <script src="/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/vendors/datatables.net-dt/js/dataTables.dataTables.min.js"></script>
+    <script src="/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/vendors/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+    <script src="/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <script src="/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/dist/js/dataTables-data.js"></script>
+
+    <!-- FeatherIcons JavaScript -->
+    <script src="/dist/js/feather.min.js"></script>
+
+    <!-- Fancy Dropdown JS -->
+    <script src="/dist/js/dropdown-bootstrap-extended.js"></script>
+
+    <!-- Toggles JavaScript -->
+    <script src="/vendors/jquery-toggles/toggles.min.js"></script>
+    <script src="/dist/js/toggle-data.js"></script>
+
+    <!-- Init JavaScript -->
+    <script src="/dist/js/init.js"></script>
+
+</body>
+
+</html>
