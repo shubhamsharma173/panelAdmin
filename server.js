@@ -252,7 +252,7 @@ async function registerApi(att) {
                     access_groups: att.access_groups,
                     status: "success"
                 }
-                let stat=response.body.status;
+                let stat=response.body;
                 Api.findOneAndUpdate({id:att.id},{status: stat}, { new: true },(err,doc)=>{
                     if(err){console.log(err);}
                 });
