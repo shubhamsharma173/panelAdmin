@@ -27,14 +27,7 @@ mongoose.set('useFindAndModify', false);
 const Api = require("./models/api");
 
 firebase.initializeApp({
-    apiKey: "AIzaSyDmn-3kRZyHuACUs74Pw06j3ilotG77QiM",
-    authDomain: "registerapi-ec8bc.firebaseapp.com",
-    databaseURL: "https://registerapi-ec8bc.firebaseio.com",
-    projectId: "registerapi-ec8bc",
-    storageBucket: "registerapi-ec8bc.appspot.com",
-    messagingSenderId: "198057974974",
-    appId: "1:198057974974:web:e2c021a949d902b9a692ef",
-    measurementId: "G-MDQ53PSCFQ"
+    //credentials
 });
 
 let counter = 0, allReg = 0, dispData = [], regData = [];
